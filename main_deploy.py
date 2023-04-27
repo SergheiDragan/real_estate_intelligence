@@ -165,4 +165,4 @@ if st.button('Predict Price per m2'):
     
     prediction = xgb_model.predict(inputs)
     print("final pred", np.squeeze(prediction, -1))
-    st.write(f"Your aparment fair value per m2 is: {np.squeeze(prediction, -1):.2f} €")
+    st.write(f"Your property fair value per m2 is: {np.squeeze(prediction, -1):.2f} €")
