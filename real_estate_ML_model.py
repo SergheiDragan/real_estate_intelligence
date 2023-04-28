@@ -13,14 +13,16 @@ real_estate_df = pd.read_csv('real_estate_data.csv')
 object_attributes = [cat for cat in real_estate_df.columns if real_estate_df[cat].dtypes == 'object']
 print(object_attributes)
 
-# Creating an instance of LabelEncoder class
-le = LabelEncoder()
-# Applying LabelEncoder to categorical columns
-for cat in object_attributes:
-    real_estate_df[cat] = le.fit_transform(real_estate_df[cat])
 
-#save label encoder classes
-np.save('label_encoder_classes.npy', le.classes_)
+# Creating a dictionary to store the LabelEncoder objects
+le_dict = {}
+for cat in object_attributes:
+    le = LabelEncoder()
+    real_estate_df[cat] = le.fit_transform(real_estate_df[cat])
+    le_dict[cat] = le
+
+# Saving the dictionary to a .npy file
+np.save('label_encoder_classes.npy', le_dict)
 
 # Separate target variable from predictors
 X = real_estate_df.drop('price_EUR_sqm', axis=1)
