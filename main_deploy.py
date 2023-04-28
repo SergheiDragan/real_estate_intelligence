@@ -69,19 +69,19 @@ selected_localitate = st.selectbox("City:", localitate)
 select_furnishing = st.slider('Furnishing Level:', 0, max(real_estate_df["furnishing"]), 1)
 
 # Select nr of bathrooms
-select_bathrooms = st.slider('# of Bathrooms:', 0, 10, 1)
+select_bathrooms = st.slider('Number of Bathrooms:', 0, 10, 1)
 
 # Select nr of balconies
-select_balconies = st.slider('# of Balconies:', 0, 10, 1)
+select_balconies = st.slider('Number of Balconies:', 0, 10, 1)
 
 # Select nr of kitchens
-select_kitchens = st.slider('Kitchens:', 0, 10, 1)
+select_kitchens = st.slider('Number of Kitchens:', 0, 10, 1)
 
 # Select nr of rooms
-select_rooms = st.slider('# of Rooms:', 0, 20, 1)
+select_rooms = st.slider('Number of Rooms:', 0, 20, 1)
 
 # Select nr parking slots
-select_parking_slots = st.slider('# of Parking Slots:', 0, 5, 1)
+select_parking_slots = st.slider('Number of Parking Slots:', 0, 5, 1)
 
 # Select Structural resistance - radio buttons
 left_column, right_column = st.columns(2)
@@ -91,29 +91,29 @@ with left_column:
         np.unique(real_estate_df['structura_rezistenta']))
 
 # Select surface m2
-select_surface = st.slider('Surface (sqm):', 0.0, 500.0, 1.0)
+select_surface = st.slider("What's the Living Surface (sqm) of you property?", 0.0, 500.0, 1.0)
 
 # Select property type
 left_column, right_column = st.columns(2)
 with left_column:
     property_type = st.radio(
-        'Apartment or House?',
+        'Is it an Apartment or a House?',
         np.unique(real_estate_df['tip_imobil']))
 
 # Add district to drop-down list
 zona = real_estate_df['zona'].unique()
 # Select district from drop-down list
-selected_district = st.selectbox("District:", zona)
+selected_district = st.selectbox("Select District:", zona)
 
 # Check if under construction
-under_construction = st.selectbox('Under Construction?', ('Yes', 'No'))
+under_construction = st.selectbox('Is the property still under Construction?', ('Yes', 'No'))
 if under_construction == 'Yes':
     under_construction = True
 else:
     under_construction = False
 
 # Check if in project phase  
-project_phase = st.selectbox('Project Phase?', ('Yes', 'No'))
+project_phase = st.selectbox('Is the property at the Project Phase?', ('Yes', 'No'))
 if project_phase == 'Yes':
     project_phase = True
 else:
@@ -123,28 +123,28 @@ else:
 select_max_floor = st.slider('What is the max floor of the building?', -1, 30, 1)
 
 # Check if mandarda
-attic = st.selectbox('Is attic?', ('Yes', 'No'))
+attic = st.selectbox('Is it located in the attic?', ('Yes', 'No'))
 if attic == 'Yes':
     attic = True
 else:
     attic = False
 
 # Check district heating
-district_heating = st.selectbox('Centralized Heating System?', ('Yes', 'No'))
+district_heating = st.selectbox('Does it have a Centralized Heating System?', ('Yes', 'No'))
 if district_heating == 'Yes':
     district_heating = True
 else:
     district_heating = False
 
 # Check building heating
-building_heating = st.selectbox('Building Heating System?', ('Yes', 'No'))
+building_heating = st.selectbox('Does it have a Building Heating System?', ('Yes', 'No'))
 if building_heating == 'Yes':
     building_heating = True
 else:
     building_heating = False
 
 # Check invidual heating
-individual_heating = st.selectbox('Individual Heating System?', ('Yes', 'No'))
+individual_heating = st.selectbox('Does it have an Individual Heating System?', ('Yes', 'No'))
 if individual_heating == 'Yes':
     individual_heating = True
 else:
@@ -158,7 +158,7 @@ else:
     underfloor_heating = False
 
 # Select days since listing
-days_since_listing = st.slider('How many days have passed since listing the property?', 0, 2000, 1)
+days_since_listing = st.slider("How many days have passed since you're actively trying to sell the property?", 0, 2000, 1)
 
 
 if st.button('Predict Price per m2'):
@@ -177,4 +177,6 @@ if st.button('Predict Price per m2'):
     
     prediction = xgb_model.predict(inputs)
     print("final pred", np.squeeze(prediction, -1))
-    st.write(f"Your aparment fair value per m2 is: {np.squeeze(prediction, -1):.2f} €")
+    st.write(f"The price per m2 of your property is: {np.squeeze(prediction, -1):.0f} €")
+    full_price = select_surface * prediction
+    st.write(f"The full price of your property is: {full_price:.0f} €")
