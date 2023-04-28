@@ -13,19 +13,31 @@ st.header('Real Estate Price Prediction')
 # Import data
 real_estate_df = pd.read_csv("https://raw.githubusercontent.com/dragan-serghei/real_estate_intelligence/main/real_estate_data.csv")
 
-# Load LabelEncoder class
-le = LabelEncoder()
-le.classes_ = np.load('label_encoder_classes.npy', allow_pickle=True)
+# Loading the dictionary from the .npy file
+le_dict = np.load('label_encoder_classes.npy', allow_pickle=True).item()
+
+# Retrieving the LabelEncoder object for the 'partitioning' variable
+le_partitioning = le_dict['partitioning']
+
+# Retrieving the LabelEncoder object for the 'structura_rezistenta' variable
+le_rezistenta = le_dict['structura_rezistenta']
+
+# Retrieving the LabelEncoder object for the 'localitate' variable
+le_localitate = le_dict['localitate']
+
+# Retrieving the LabelEncoder object for the 'tip_imobil' variable
+le_tip_imobil = le_dict['tip_imobil']
+
+# Retrieving the LabelEncoder object for the 'zona' variable
+le_zona = le_dict['zona']
 
 # Load XGBRegressor model
 xgb_model = XGBRegressor()
 xgb_model = joblib.load("best_model.joblib.gz")
 
-
-
 # Display 100 rows of the dataset if box is checked
 if st.checkbox('Show Training Dataframe'):
-    real_estate_df.head(100)
+    st.write(real_estate_df.head(100))
 
 # Define the user interface
 st.markdown('Select the information about your property:')
@@ -57,19 +69,19 @@ selected_localitate = st.selectbox("City:", localitate)
 select_furnishing = st.slider('Furnishing Level:', 0, max(real_estate_df["furnishing"]), 1)
 
 # Select nr of bathrooms
-select_bathrooms = st.slider('# of Bathrooms:', 0, max(real_estate_df["nr_bai"]), 1)
+select_bathrooms = st.slider('# of Bathrooms:', 0, 10, 1)
 
 # Select nr of balconies
-select_balconies = st.slider('# of Balconies:', 0, max(real_estate_df["nr_balcoane"]), 1)
+select_balconies = st.slider('# of Balconies:', 0, 10, 1)
 
 # Select nr of kitchens
-select_kitchens = st.slider('# of Kitchens:', 0, max(real_estate_df["nr_of_kitchens"]), 1)
+select_kitchens = st.slider('Kitchens:', 0, 10, 1)
 
 # Select nr of rooms
-select_rooms = st.slider('# of Rooms:', 0, max(real_estate_df["rooms"]), 1)
+select_rooms = st.slider('# of Rooms:', 0, 20, 1)
 
 # Select nr parking slots
-select_parking_slots = st.slider('# of Parking Slots:', 0, max(real_estate_df["nr_locuri_parcare"]), 1)
+select_parking_slots = st.slider('# of Parking Slots:', 0, 5, 1)
 
 # Select Structural resistance - radio buttons
 left_column, right_column = st.columns(2)
@@ -79,7 +91,7 @@ with left_column:
         np.unique(real_estate_df['structura_rezistenta']))
 
 # Select surface m2
-select_surface = st.slider('Surface (sqm):', 0.0, max(real_estate_df["useful_surface"]), 1.0)
+select_surface = st.slider('Surface (sqm):', 0.0, 500, 1.0)
 
 # Select property type
 left_column, right_column = st.columns(2)
@@ -108,7 +120,7 @@ else:
     project_phase = False
 
 # Select max floor of the building
-select_max_floor = st.slider('What is the max floor of the building?', -1, max(real_estate_df["max_floor"]), 1)
+select_max_floor = st.slider('What is the max floor of the building?', -1, 30, 1)
 
 # Check if mandarda
 attic = st.selectbox('Is attic?', ('Yes', 'No'))
@@ -146,15 +158,15 @@ else:
     underfloor_heating = False
 
 # Select days since listing
-days_since_listing = st.slider('How many days have passed since listing the property?', 0, max(real_estate_df["days_since_listing"]), 1)
+days_since_listing = st.slider('How many days have passed since listing the property?', 0, 2000, 1)
 
 
 if st.button('Predict Price per m2'):
-    inpt_partitioning = le.transform(np.expand_dims(partitioning_type, -1))
-    inpt_localitate = le.transform(np.expand_dims(selected_localitate, -1))
-    inpt_structural_resistance = le.transform(np.expand_dims(structural_resistance, -1))
-    inpt_property_type = le.transform(np.expand_dims(property_type, -1))
-    inpt_selected_district = le.transform(np.expand_dims(selected_district, -1))
+    inpt_partitioning = le_partitioning.transform([partitioning_type])[0]
+    inpt_localitate = le_localitate.transform([selected_localitate])[0]
+    inpt_structural_resistance = le_rezistenta.transform([structural_resistance])[0]
+    inpt_property_type = le_tip_imobil.transform([property_type])[0]
+    inpt_selected_district = le_zona.transform([selected_district])[0]
 
     inputs = np.expand_dims(
         [selected_construction_year, int(inpt_partitioning), select_comfort, select_floor_level,
@@ -165,4 +177,4 @@ if st.button('Predict Price per m2'):
     
     prediction = xgb_model.predict(inputs)
     print("final pred", np.squeeze(prediction, -1))
-    st.write(f"Your property fair value per m2 is: {np.squeeze(prediction, -1):.2f} €")
+    st.write(f"Your aparment fair value per m2 is: {np.squeeze(prediction, -1):.2f} €")
