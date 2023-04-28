@@ -91,7 +91,7 @@ with left_column:
         np.unique(real_estate_df['structura_rezistenta']))
 
 # Select surface m2
-select_surface = st.slider('Surface (sqm):', 0.0, 500, 1.0)
+select_surface = st.slider('Surface (sqm):', 0.0, 500.0, 1.0)
 
 # Select property type
 left_column, right_column = st.columns(2)
