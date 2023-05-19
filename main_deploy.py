@@ -7,6 +7,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from xgboost import XGBRegressor
 import xgboost
 import joblib
+from PIL import Image
 
 st.header('Real Estate Price Prediction')
 
@@ -42,6 +43,16 @@ if st.checkbox('Show Training Dataframe'):
 # Define the user interface
 st.markdown('Select the information about your property:')
 
+# Add city to drop-down list
+localitate = real_estate_df['localitate'].unique()
+# Select city from drop-down list
+selected_localitate = st.selectbox("City:", localitate)
+
+# Add district to drop-down list
+zona = real_estate_df['zona'].unique()
+# Select district from drop-down list
+selected_district = st.selectbox("Select District:", zona)
+
 # Add construction year to drop-down list
 construction_year = real_estate_df['construction_year'].unique()
 # Select construction year from drop-down list
@@ -60,10 +71,15 @@ select_comfort = st.slider('Comfor Level:', 0, max(real_estate_df["comfort"]), 1
 # Select floor level
 select_floor_level = st.slider('Floor Level:', 0, max(real_estate_df["floor_level"]), 1)
 
-# Add city to drop-down list
-localitate = real_estate_df['localitate'].unique()
-# Select city from drop-down list
-selected_localitate = st.selectbox("City:", localitate)
+# Select max floor of the building
+select_max_floor = st.slider('What is the max floor of the building?', -1, 30, 1)
+
+# Check if mandarda
+attic = st.selectbox('Is it located in the attic?', ('Yes', 'No'))
+if attic == 'Yes':
+    attic = True
+else:
+    attic = False
 
 # Select furnishing level
 select_furnishing = st.slider('Furnishing Level:', 0, max(real_estate_df["furnishing"]), 1)
@@ -100,11 +116,6 @@ with left_column:
         'Is it an Apartment or a House?',
         np.unique(real_estate_df['tip_imobil']))
 
-# Add district to drop-down list
-zona = real_estate_df['zona'].unique()
-# Select district from drop-down list
-selected_district = st.selectbox("Select District:", zona)
-
 # Check if under construction
 under_construction = st.selectbox('Is the property still under Construction?', ('Yes', 'No'))
 if under_construction == 'Yes':
@@ -118,16 +129,6 @@ if project_phase == 'Yes':
     project_phase = True
 else:
     project_phase = False
-
-# Select max floor of the building
-select_max_floor = st.slider('What is the max floor of the building?', -1, 30, 1)
-
-# Check if mandarda
-attic = st.selectbox('Is it located in the attic?', ('Yes', 'No'))
-if attic == 'Yes':
-    attic = True
-else:
-    attic = False
 
 # Check district heating
 district_heating = st.selectbox('Does it have a Centralized Heating System?', ('Yes', 'No'))
@@ -161,7 +162,7 @@ else:
 days_since_listing = st.slider("How many days have passed since you're actively trying to sell the property?", 0, 2000, 1)
 
 
-if st.button('Predict Price per m2'):
+if st.button('Predict House Price'):
     inpt_partitioning = le_partitioning.transform([partitioning_type])[0]
     inpt_localitate = le_localitate.transform([selected_localitate])[0]
     inpt_structural_resistance = le_rezistenta.transform([structural_resistance])[0]
