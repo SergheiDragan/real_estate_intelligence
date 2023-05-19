@@ -21,7 +21,7 @@ response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 
 # Display image
-st.image(image, caption='House Image', use_column_width=True)
+st.image(image, caption='Bing Image Creator | Image created with AI - Powered by DALL-E', use_column_width=True)
 
 # Import data
 real_estate_df = pd.read_csv("https://raw.githubusercontent.com/dragan-serghei/real_estate_intelligence/main/real_estate_data.csv")
