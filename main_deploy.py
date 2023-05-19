@@ -8,8 +8,20 @@ from xgboost import XGBRegressor
 import xgboost
 import joblib
 from PIL import Image
+import requests
+from io import BytesIO
 
 st.header('Real Estate Price Prediction')
+
+# Image URL
+image_url = 'https://raw.githubusercontent.com/dragan-serghei/real_estate_intelligence/main/house_vibrant_forest.jpeg'
+
+# Fetch image from URL
+response = requests.get(image_url)
+image = Image.open(BytesIO(response.content))
+
+# Display image
+st.image(image, caption='House Image', use_column_width=True)
 
 # Import data
 real_estate_df = pd.read_csv("https://raw.githubusercontent.com/dragan-serghei/real_estate_intelligence/main/real_estate_data.csv")
