@@ -81,10 +81,10 @@ with left_column:
 select_comfort = st.slider('Comfor Level:', 0, max(real_estate_df["comfort"]), 1)
 
 # Select floor level
-select_floor_level = st.slider('Floor Level:', 0, max(real_estate_df["floor_level"]), 1)
+select_floor_level = st.slider('Floor Level:', -1, max(real_estate_df["floor_level"]), 1)
 
 # Select max floor of the building
-select_max_floor = st.slider('What is the max floor of the building?', -1, 30, 1)
+select_max_floor = st.slider('What is the max floor of the building?', 0, 30, 1)
 
 # Check if mandarda
 attic = st.selectbox('Is it located in the attic?', ('Yes', 'No'))
