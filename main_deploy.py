@@ -11,7 +11,14 @@ from PIL import Image
 import requests
 from io import BytesIO
 
-st.header('Real Estate Price Prediction')
+st.header('Estimează prețul proprietății tale în mai puțin de 1 minut!')
+
+description = '''
+Acesta este un instrument de estimare a prețului pentru proprietățile din România. 
+La bază, se folosește un algoritm de învățare automată antrenat pe un set de date ce conține aproximativ 70.000 de proprietăți din 9 cele mai mari orașe și 
+folosește peste 20 de caracteristici pentru fiecare imobil.
+'''
+st.markdown(description)
 
 # Image URL
 image_url = 'https://raw.githubusercontent.com/dragan-serghei/real_estate_intelligence/main/house_vibrant_forest.jpeg'
