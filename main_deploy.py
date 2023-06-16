@@ -60,13 +60,17 @@ localitate = real_estate_df['localitate'].unique()
 # Select city from drop-down list
 selected_localitate = st.selectbox("City:", localitate)
 
-# Add district to drop-down list
-zona = real_estate_df['zona'].unique()
-# Select district from drop-down list
-selected_district = st.selectbox("Select District:", zona)
+# Filter regions based on the selected city
+filtered_regions = real_estate_df[real_estate_df['localitate'] == selected_localitate]['zona'].unique()
+# Sort regions in ascending order
+filtered_regions = np.sort(filtered_regions)
+# Select region from the filtered options
+selected_district = st.selectbox("Select District:", filtered_regions)
 
 # Add construction year to drop-down list
 construction_year = real_estate_df['construction_year'].unique()
+# Sort construction year in descending order
+construction_year = np.sort(construction_year)[::-1]
 # Select construction year from drop-down list
 selected_construction_year = st.selectbox("Construction year:", construction_year)
 
