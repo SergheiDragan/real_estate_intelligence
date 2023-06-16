@@ -15,8 +15,8 @@ st.markdown("<h2 style='text-align: center;'>Estimează prețul proprietății t
 
 description = '''
 Acesta este un instrument de estimare a prețului pentru proprietățile din România. 
-La bază, se folosește un algoritm de învățare automată antrenat pe un set de date ce conține aproximativ 70.000 de proprietăți din 9 cele mai mari orașe și 
-folosește peste 20 de caracteristici pentru fiecare imobil.
+La bază, am folosit un algoritm de învățare automată antrenat pe un set de date ce conține aproximativ 70.000 de proprietăți din 9 cele mai mari orașe și 
+care ia in considerare peste 20 de caracteristici pentru fiecare imobil.
 '''
 st.markdown(description)
 
