@@ -11,7 +11,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 
-st.header('Estimează prețul proprietății tale în mai puțin de 1 minut!')
+st.markdown("<h2 style='text-align: center;'>Estimează prețul proprietății tale în mai puțin de 1 minut!</h2>", unsafe_allow_html=True)
 
 description = '''
 Acesta este un instrument de estimare a prețului pentru proprietățile din România. 
