@@ -10,6 +10,8 @@ import joblib
 from PIL import Image
 import requests
 from io import BytesIO
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 st.markdown("<h2 style='text-align: center;'>Estimează prețul proprietății tale în mai puțin de 1 minut!</h2>", unsafe_allow_html=True)
 
@@ -184,6 +186,21 @@ else:
 # Select days since listing
 days_since_listing = st.slider("How many days have passed since you're actively trying to sell the property?", 0, 2000, 1)
 
+# Calculate the range for surface m2 to be used for plotting the histogram
+surface_min = (select_surface // 10) * 10
+surface_max = surface_min + 9
+
+# Filter the DataFrame based on user-selected attributes to be used for the Histogram
+filtered_df = real_estate_df[
+    (real_estate_df['localitate'] == selected_localitate) &
+    (real_estate_df['zona'] == selected_district) &
+    (real_estate_df['construction_year'] == selected_construction_year) &
+    (real_estate_df['rooms'] == select_rooms) &
+    (real_estate_df['useful_surface'].between(surface_min, surface_max))
+]
+
+# Apply the "seaborn" theme to the plot
+sns.set_theme()
 
 if st.button('Predict House Price'):
     inpt_partitioning = le_partitioning.transform([partitioning_type])[0]
@@ -204,3 +221,15 @@ if st.button('Predict House Price'):
     st.write(f"The price per m2 of your property is: {np.squeeze(prediction, -1):.0f} €")
     full_price = select_surface * prediction.item()
     st.write(f"The full price of your property is: {full_price:.0f} €")
+
+    # Create the histogram using matplotlib
+    fig, ax = plt.subplots()
+    ax.hist(filtered_df['price_EUR_sqm'], bins=10)
+    
+    # Set labels and title
+    ax.set_xlabel('Property Price (EUR/sqm)')
+    ax.set_ylabel('Frequency')
+    ax.set_title('Histogram of Property Prices')
+    
+    # Display the histogram using Streamlit
+    st.pyplot(fig)
