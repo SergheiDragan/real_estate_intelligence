@@ -270,6 +270,8 @@ if st.button('Predict House Price'):
         # Display the number of properties presented in the histogram
         num_properties = len(filtered_df)
         st.write(f"The number of properties that satisfy the above selected criteria is: {num_properties}")
-      
-        # Display the histogram using Streamlit
+
+        # Display the legend
+        ax.legend()
+        # Display the histogram
         st.pyplot(fig)
