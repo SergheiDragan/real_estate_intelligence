@@ -217,7 +217,7 @@ note = f"This histogram shows the distribution of property prices based on the s
 if st.button('Predict House Price'):
     # Create the histogram using matplotlib
     fig, ax = plt.subplots(1, 1)
-    fig.set_figheight(8) # Adjust the figure height
+    fig.set_figheight(3) # Adjust the figure height
     ax.hist(filtered_df['price_EUR_sqm'], bins=10, color=color)
     
     # Set labels and title
