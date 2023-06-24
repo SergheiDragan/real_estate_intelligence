@@ -12,6 +12,7 @@ import requests
 from io import BytesIO
 import matplotlib.pyplot as plt
 import seaborn as sns
+import locale
 
 st.markdown("<h2 style='text-align: center;'>Estimează prețul proprietății tale în mai puțin de 1 minut!</h2>", unsafe_allow_html=True)
 
@@ -216,6 +217,7 @@ note = f"This histogram shows the distribution of property prices based on the s
 if st.button('Predict House Price'):
     # Create the histogram using matplotlib
     fig, ax = plt.subplots(1, 1)
+    fig.set_figheight(8) # Adjust the figure height
     ax.hist(filtered_df['price_EUR_sqm'], bins=10, color=color)
     
     # Set labels and title
@@ -243,8 +245,10 @@ if st.button('Predict House Price'):
          building_heating, individual_heating, underfloor_heating, days_since_listing], 0)
     
     prediction = xgb_model.predict(inputs)
-    print("final pred", np.squeeze(prediction, -1))
-    st.write(f"The price per m2 of your property is: {np.squeeze(prediction, -1):.0f} €")
+    formatted_prediction = locale.format_string("%.0f", np.squeeze(prediction, -1), grouping=True)
     full_price = select_surface * prediction.item()
-    st.write(f"The full price of your property is: {full_price:.0f} €")
-
+    formatted_full_price = locale.format_string("%.0f", full_price, grouping=True)
+    
+    # Display the predicted prices and full price
+    st.write(f"<span style='font-size: 24px'>The price per m2 of your property is: {formatted_prediction} €</span>", unsafe_allow_html=True)
+    st.write(f"<span style='font-size: 24px'>The full price of your property is: {formatted_full_price} €</span>", unsafe_allow_html=True)
