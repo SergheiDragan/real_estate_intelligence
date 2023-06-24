@@ -214,9 +214,6 @@ note = f"This histogram shows the distribution of property prices based on the s
        f"- Number of Rooms: {select_rooms}\n" \
        f"- Living Surface: {surface_min}-{surface_max} sqm"
 
-# Set the locale to the appropriate region
-locale.setlocale(locale.LC_ALL, 'en_IE.UTF-8')
-
 if st.button('Predict House Price'):
     # Create the histogram using matplotlib
     fig, ax = plt.subplots(1, 1)
@@ -248,10 +245,11 @@ if st.button('Predict House Price'):
          building_heating, individual_heating, underfloor_heating, days_since_listing], 0)
     
     prediction = xgb_model.predict(inputs)
-    formatted_prediction = locale.format_string("%.0f", np.squeeze(prediction, -1), grouping=True)
-    full_price = select_surface * prediction.item()
-    formatted_full_price = locale.format_string("%.0f", full_price, grouping=True)
+    price_per_m2 = np.squeeze(prediction, -1)
+    formatted_price_per_m2 = "{:,.0f}".format(price_per_m2)
     
-    # Display the predicted prices and full price
-    st.write(f"<span style='font-size: 24px'>The price per m2 of your property is: {formatted_prediction} €</span>", unsafe_allow_html=True)
-    st.write(f"<span style='font-size: 24px'>The full price of your property is: {formatted_full_price} €</span>", unsafe_allow_html=True)
+    st.write(f"The price per m2 of your property is: {formatted_price_per_m2} €")
+    full_price = select_surface * prediction.item()
+    formatted_full_price = "{:,.0f}".format(full_price)
+    
+    st.write(f"The full price of your property is: {formatted_full_price} €")
