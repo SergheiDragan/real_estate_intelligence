@@ -203,6 +203,18 @@ filtered_df = real_estate_df[
 sns.set_theme()
 
 if st.button('Predict House Price'):
+    # Create the histogram using matplotlib
+    fig, ax = plt.subplots()
+    ax.hist(filtered_df['price_EUR_sqm'], bins=10)
+    
+    # Set labels and title
+    ax.set_xlabel('Property Price (EUR/sqm)')
+    ax.set_ylabel('Frequency')
+    ax.set_title('Histogram of Property Prices')
+    
+    # Display the histogram using Streamlit
+    st.pyplot(fig)
+    
     inpt_partitioning = le_partitioning.transform([partitioning_type])[0]
     inpt_localitate = le_localitate.transform([selected_localitate])[0]
     inpt_structural_resistance = le_rezistenta.transform([structural_resistance])[0]
@@ -222,14 +234,3 @@ if st.button('Predict House Price'):
     full_price = select_surface * prediction.item()
     st.write(f"The full price of your property is: {full_price:.0f} €")
 
-    # Create the histogram using matplotlib
-    fig, ax = plt.subplots()
-    ax.hist(filtered_df['price_EUR_sqm'], bins=10)
-    
-    # Set labels and title
-    ax.set_xlabel('Property Price (EUR/sqm)')
-    ax.set_ylabel('Frequency')
-    ax.set_title('Histogram of Property Prices')
-    
-    # Display the histogram using Streamlit
-    st.pyplot(fig)
