@@ -208,8 +208,8 @@ if st.button('Predict House Price'):
     ax.hist(filtered_df['price_EUR_sqm'], bins=10)
     
     # Set labels and title
-    ax.set_xlabel('Property Price (EUR/sqm)')
-    ax.set_ylabel('Frequency')
+    ax.set_xlabel('Property Price (EUR/m2)')
+    ax.set_ylabel('# of Properties')
     ax.set_title('Histogram of Property Prices')
     
     # Display the histogram using Streamlit
