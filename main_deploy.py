@@ -213,7 +213,7 @@ sns.set_theme()
 note = f"The histogram below shows the distribution of properties' prices based on the selected attributes:\n" \
        f"- City: {selected_localitate}\n" \
        f"- District: {selected_district}\n" \
-       f"- Construction Year: {previous_year}-{selected_construction_year}\n" \
+       f"- Construction Year: {previous_years}-{selected_construction_year}\n" \
        f"- Number of Rooms: {select_rooms}\n" \
        f"- Living Surface: {surface_min}-{surface_max} sqm"
 
