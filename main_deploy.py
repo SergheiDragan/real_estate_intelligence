@@ -214,6 +214,9 @@ note = f"This histogram shows the distribution of property prices based on the s
        f"- Number of Rooms: {select_rooms}\n" \
        f"- Living Surface: {surface_min}-{surface_max} sqm"
 
+# Set the locale to the appropriate region
+locale.setlocale(locale.LC_ALL, 'en_IE.UTF-8')
+
 if st.button('Predict House Price'):
     # Create the histogram using matplotlib
     fig, ax = plt.subplots(1, 1)
