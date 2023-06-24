@@ -191,11 +191,14 @@ days_since_listing = st.slider("How many days have passed since you're actively 
 surface_min = (select_surface // 10) * 10
 surface_max = surface_min + 9
 
+# The range of years to be used for plotting the histogram
+previous_year = selected_construction_year - 1
+
 # Filter the DataFrame based on user-selected attributes to be used for the Histogram
 filtered_df = real_estate_df[
     (real_estate_df['localitate'] == selected_localitate) &
     (real_estate_df['zona'] == selected_district) &
-    (real_estate_df['construction_year'] == selected_construction_year) &
+    (real_estate_df['construction_year'].between(previous_year, selected_construction_year) &
     (real_estate_df['rooms'] == select_rooms) &
     (real_estate_df['useful_surface'].between(surface_min, surface_max))
 ]
@@ -210,7 +213,7 @@ sns.set_theme()
 note = f"The histogram below shows the distribution of properties' prices based on the selected attributes:\n" \
        f"- City: {selected_localitate}\n" \
        f"- District: {selected_district}\n" \
-       f"- Construction Year: {selected_construction_year}\n" \
+       f"- Construction Year: {previous_year}-{selected_construction_year}\n" \
        f"- Number of Rooms: {select_rooms}\n" \
        f"- Living Surface: {surface_min}-{surface_max} sqm"
 
