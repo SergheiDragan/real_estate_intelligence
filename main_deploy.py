@@ -11,8 +11,8 @@ from PIL import Image
 import requests
 from io import BytesIO
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import seaborn as sns
-import locale
 
 st.markdown("<h2 style='text-align: center;'>Estimează prețul proprietății tale în mai puțin de 1 minut!</h2>", unsafe_allow_html=True)
 
@@ -217,13 +217,16 @@ note = f"This histogram shows the distribution of property prices based on the s
 if st.button('Predict House Price'):
     # Create the histogram using matplotlib
     fig, ax = plt.subplots(1, 1)
-    fig.set_figheight(3) # Adjust the figure height
+    fig.set_figheight(4) # Adjust the figure height
     ax.hist(filtered_df['price_EUR_sqm'], bins=10, color=color)
+
+    # Set y-axis to integer values
+    ax.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
     
     # Set labels and title
-    ax.set_xlabel('Property Price (EUR/m2)')
+    ax.set_xlabel('Property Price (EUR/m2)', fontsize=12)
     ax.set_ylabel('# of Properties')
-    ax.set_title('Histogram of Actual Property Prices')
+    ax.set_title('Histogram of Actual Property Prices', fontsize=12)
 
     # Note for the user to understand what the histogram shows 
     st.text(note)
@@ -248,8 +251,8 @@ if st.button('Predict House Price'):
     price_per_m2 = np.squeeze(prediction, -1)
     formatted_price_per_m2 = "{:,.0f}".format(price_per_m2)
     
-    st.write(f"The price per m2 of your property is: {formatted_price_per_m2} €")
+    st.write(f"The price per m2 of your property is: <span style='font-size: 20px'>{formatted_price_per_m2} €</span>", unsafe_allow_html=True)
     full_price = select_surface * prediction.item()
     formatted_full_price = "{:,.0f}".format(full_price)
     
-    st.write(f"The full price of your property is: {formatted_full_price} €")
+    st.write(f"The full price of your property is: <span style='font-size: 20px'>{formatted_full_price} €</span>", unsafe_allow_html=True)
