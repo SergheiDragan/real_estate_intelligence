@@ -238,28 +238,32 @@ if st.button('Predict House Price'):
     
     st.write(f"The full price of your property is: <span style='font-size: 20px'>{formatted_full_price} €</span>", unsafe_allow_html=True)
 
-    # Create the histogram using matplotlib
-    fig, ax = plt.subplots(1, 1)
-    fig.set_figheight(4) # Adjust the figure height
-    ax.hist(filtered_df['price_EUR_sqm'], bins=10, color=color)
-
-    # Set y-axis to integer values
-    ax.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+    # Check if there are properties that match the selected criteria
+    if filtered_df.empty:
+        st.write("We wanted to show you a histogram with properties that match your selected criteria, but unfortunately there aren't any.")  
+    else:    
+        # Create the histogram using matplotlib
+        fig, ax = plt.subplots(1, 1)
+        fig.set_figheight(4) # Adjust the figure height
+        ax.hist(filtered_df['price_EUR_sqm'], bins=10, color=color)
     
-    # Set labels and title
-    fontsize = 9
-    ax.set_xlabel('Property Price (EUR/m2)', fontsize=fontsize)
-    ax.set_ylabel('# of Properties',fontsize=fontsize)
-    ax.set_title('Histogram of Actual Property Prices (EUR/m2)', fontsize=fontsize)
-    ax.tick_params(axis='x', labelsize=9)
-    ax.tick_params(axis='y', labelsize=9)
-
-    # Note for the user to understand what the histogram shows 
-    st.markdown(note, unsafe_allow_html=True)
-
-    # Display the number of properties presented in the histogram
-    num_properties = len(filtered_df)
-    st.write(f"The number of properties that satisfy the above selected criteria is: {num_properties}")
-  
-    # Display the histogram using Streamlit
-    st.pyplot(fig)
+        # Set y-axis to integer values
+        ax.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+        
+        # Set labels and title
+        fontsize = 9
+        ax.set_xlabel('Property Price (EUR/m2)', fontsize=fontsize)
+        ax.set_ylabel('# of Properties',fontsize=fontsize)
+        ax.set_title('Histogram of Actual Property Prices (EUR/m2)', fontsize=fontsize)
+        ax.tick_params(axis='x', labelsize=9)
+        ax.tick_params(axis='y', labelsize=9)
+    
+        # Note for the user to understand what the histogram shows 
+        st.markdown(note, unsafe_allow_html=True)
+    
+        # Display the number of properties presented in the histogram
+        num_properties = len(filtered_df)
+        st.write(f"The number of properties that satisfy the above selected criteria is: {num_properties}")
+      
+        # Display the histogram using Streamlit
+        st.pyplot(fig)
