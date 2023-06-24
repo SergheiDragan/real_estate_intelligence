@@ -216,7 +216,7 @@ note = f"This histogram shows the distribution of property prices based on the s
 if st.button('Predict House Price'):
     # Create the histogram using matplotlib
     fig, ax = plt.subplots(1, 1)
-    n, bins, _ = ax.hist(filtered_df['price_EUR_sqm'], bins=10, color=color)
+    n, bins, patches = ax.hist(filtered_df['price_EUR_sqm'], bins=10, color=color)
     
     # Set labels and title
     ax.set_xlabel('Property Price (EUR/m2)')
@@ -227,9 +227,13 @@ if st.button('Predict House Price'):
     st.text(note)
 
     # Customize the appearance of the bars
-    width = bins[1] - bins[0]
-    centers = bins[:-1] + width / 2
-    ax.bar(centers, n, width=width, color=color, edgecolor='black', linewidth=1, alpha=0.7)
+    for rect in patches:
+        rect.set_edgecolor(color)  # Set the edge color
+        rect.set_linewidth(1)  # Set the edge width
+        rect.set_facecolor(color)  # Set the face color
+
+        # Create rounded corners by setting the rectangle patch's border radius
+        rect.set_boxstyle("round,pad=0.1")  # Adjust the padding value for the desired roundness
     
     # Display the histogram using Streamlit
     st.pyplot(fig)
