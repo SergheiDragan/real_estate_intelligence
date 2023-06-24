@@ -59,8 +59,8 @@ xgb_model = XGBRegressor()
 xgb_model = joblib.load("best_model.joblib.gz")
 
 # Display 100 rows of the dataset if box is checked
-if st.checkbox('Show Training Dataframe'):
-    st.write(real_estate_df.head(100))
+# if st.checkbox('Show Training Dataframe'):
+#     st.write(real_estate_df.head(100))
 
 # Define the user interface
 st.markdown('Select the information about your property:')
