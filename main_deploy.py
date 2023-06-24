@@ -214,29 +214,7 @@ note = f"This histogram shows the distribution of property prices based on the s
        f"- Number of Rooms: {select_rooms}\n" \
        f"- Living Surface: {surface_min}-{surface_max} sqm"
 
-if st.button('Predict House Price'):
-    # Create the histogram using matplotlib
-    fig, ax = plt.subplots(1, 1)
-    fig.set_figheight(4) # Adjust the figure height
-    ax.hist(filtered_df['price_EUR_sqm'], bins=10, color=color)
-
-    # Set y-axis to integer values
-    ax.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
-    
-    # Set labels and title
-    fontsize = 9
-    ax.set_xlabel('Property Price (EUR/m2)', fontsize=fontsize)
-    ax.set_ylabel('# of Properties',fontsize=fontsize)
-    ax.set_title('Histogram of Actual Property Prices (EUR/m2)', fontsize=fontsize)
-    ax.tick_params(axis='x', labelsize=9)
-    ax.tick_params(axis='y', labelsize=9)
-
-    # Note for the user to understand what the histogram shows 
-    st.markdown(note, unsafe_allow_html=True)
-  
-    # Display the histogram using Streamlit
-    st.pyplot(fig)
-    
+if st.button('Predict House Price'):   
     inpt_partitioning = le_partitioning.transform([partitioning_type])[0]
     inpt_localitate = le_localitate.transform([selected_localitate])[0]
     inpt_structural_resistance = le_rezistenta.transform([structural_resistance])[0]
@@ -259,3 +237,25 @@ if st.button('Predict House Price'):
     formatted_full_price = "{:,.0f}".format(full_price)
     
     st.write(f"The full price of your property is: <span style='font-size: 20px'>{formatted_full_price} €</span>", unsafe_allow_html=True)
+
+    # Create the histogram using matplotlib
+    fig, ax = plt.subplots(1, 1)
+    fig.set_figheight(4) # Adjust the figure height
+    ax.hist(filtered_df['price_EUR_sqm'], bins=10, color=color)
+
+    # Set y-axis to integer values
+    ax.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+    
+    # Set labels and title
+    fontsize = 9
+    ax.set_xlabel('Property Price (EUR/m2)', fontsize=fontsize)
+    ax.set_ylabel('# of Properties',fontsize=fontsize)
+    ax.set_title('Histogram of Actual Property Prices (EUR/m2)', fontsize=fontsize)
+    ax.tick_params(axis='x', labelsize=9)
+    ax.tick_params(axis='y', labelsize=9)
+
+    # Note for the user to understand what the histogram shows 
+    st.markdown(note, unsafe_allow_html=True)
+  
+    # Display the histogram using Streamlit
+    st.pyplot(fig)
