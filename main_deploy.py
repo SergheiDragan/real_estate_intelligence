@@ -252,6 +252,9 @@ if st.button('Predict House Price'):
     
         # Set y-axis to integer values
         ax.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+
+        # Add a blue line for the estimated price
+        ax.axvline(price_per_m2, color='blue', linestyle='--', linewidth=2, label='Estimated Price')
         
         # Set labels and title
         fontsize = 9
