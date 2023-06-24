@@ -198,7 +198,7 @@ previous_year = selected_construction_year - 1
 filtered_df = real_estate_df[
     (real_estate_df['localitate'] == selected_localitate) &
     (real_estate_df['zona'] == selected_district) &
-    (real_estate_df['construction_year'].between(previous_year, selected_construction_year) &
+    (real_estate_df['construction_year'].between(previous_year, selected_construction_year)) &
     (real_estate_df['rooms'] == select_rooms) &
     (real_estate_df['useful_surface'].between(surface_min, surface_max))
 ]
