@@ -227,12 +227,12 @@ if st.button('Predict House Price'):
     fontsize = 9
     ax.set_xlabel('Property Price (EUR/m2)', fontsize=fontsize)
     ax.set_ylabel('# of Properties',fontsize=fontsize)
-    ax.set_title('Histogram of Actual Property Prices', fontsize=fontsize)
+    ax.set_title('Histogram of Actual Property Prices (EUR/m2)', fontsize=fontsize)
     ax.tick_params(axis='x', labelsize=9)
     ax.tick_params(axis='y', labelsize=9)
 
     # Note for the user to understand what the histogram shows 
-    st.text(note)
+    st.markdown(note, unsafe_allow_html=True)
   
     # Display the histogram using Streamlit
     st.pyplot(fig)
