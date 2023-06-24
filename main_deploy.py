@@ -211,11 +211,11 @@ sns.set_theme()
 
 # Add a note for the user
 note = f"The histogram below shows the distribution of properties' prices based on the selected attributes:\n" \
-       f"- City: {selected_localitate}\n" \
-       f"- District: {selected_district}\n" \
-       f"- Construction Year: {previous_years}-{selected_construction_year}\n" \
-       f"- Number of Rooms: {select_rooms}\n" \
-       f"- Living Surface: {surface_min}-{surface_max} sqm"
+       f"- City: <b>{selected_localitate}</b>\n" \
+       f"- District: <b>{selected_district}</b>\n" \
+       f"- Construction Year: <b>{previous_years}-{selected_construction_year}</b>\n" \
+       f"- Number of Rooms: <b>{select_rooms}</b>\n" \
+       f"- Living Surface: <b>{surface_min}-{surface_max} m2</b>"
 
 if st.button('Predict House Price'):   
     inpt_partitioning = le_partitioning.transform([partitioning_type])[0]
