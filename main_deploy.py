@@ -199,19 +199,39 @@ filtered_df = real_estate_df[
     (real_estate_df['useful_surface'].between(surface_min, surface_max))
 ]
 
+# Apply a custom color to the histogram
+color = '#FFA726'
+
 # Apply the "seaborn" theme to the plot
 sns.set_theme()
+
+# Add a note for the user
+note = f"This histogram shows the distribution of property prices based on the selected attributes:\n" \
+       f"- City: {selected_localitate}\n" \
+       f"- District: {selected_district}\n" \
+       f"- Construction Year: {selected_construction_year}\n" \
+       f"- Number of Rooms: {select_rooms}\n" \
+       f"- Living Surface: {surface_min}-{surface_max} sqm"
 
 if st.button('Predict House Price'):
     # Create the histogram using matplotlib
     fig, ax = plt.subplots()
-    ax.hist(filtered_df['price_EUR_sqm'], bins=10)
+    n, bins, bars = ax.hist(filtered_df['price_EUR_sqm'], bins=10, color=color)
     
     # Set labels and title
     ax.set_xlabel('Property Price (EUR/m2)')
     ax.set_ylabel('# of Properties')
-    ax.set_title('Histogram of Property Prices')
-    
+    ax.set_title('Histogram of Actual Property Prices')
+
+    # Customize the appearance of the bars
+    for rect in bars:
+        rect.set_linewidth(0)  # Remove the bar borders
+        rect.set_edgecolor(color)  # Set the edge color to match the bar color
+        rect.set_facecolor(color)  # Set the face color to match the bar color
+        rect.set_alpha(0.7)  # Adjust the transparency of the bars
+
+    # Note for the user to understand what the histogram shows 
+    st.text(note)
     # Display the histogram using Streamlit
     st.pyplot(fig)
     
