@@ -260,7 +260,7 @@ if st.button('Predict House Price'):
         fontsize = 9
         ax.set_xlabel('Property Price (EUR/m2)', fontsize=fontsize)
         ax.set_ylabel('# of Properties',fontsize=fontsize)
-        ax.set_title('Histogram of Actual Property Prices (EUR/m2)', fontsize=fontsize)
+        ax.set_title('Histogram of Actual Property Prices (EUR/m2)', fontsize=10)
         ax.tick_params(axis='x', labelsize=9)
         ax.tick_params(axis='y', labelsize=9)
     
@@ -272,6 +272,6 @@ if st.button('Predict House Price'):
         st.write(f"The number of properties that satisfy the above selected criteria is: {num_properties}")
 
         # Display the legend
-        ax.legend()
+        ax.legend(fontsize=8)
         # Display the histogram
         st.pyplot(fig)
