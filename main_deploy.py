@@ -256,6 +256,10 @@ if st.button('Predict House Price'):
 
     # Note for the user to understand what the histogram shows 
     st.markdown(note, unsafe_allow_html=True)
+
+    # Display the number of properties presented in the histogram
+    num_properties = len(filtered_df)
+    st.write(f"Number of properties presented in the histogram: {num_properties}")
   
     # Display the histogram using Streamlit
     st.pyplot(fig)
