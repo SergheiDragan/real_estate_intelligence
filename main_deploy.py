@@ -207,7 +207,7 @@ color = '#FFA726'
 sns.set_theme()
 
 # Add a note for the user
-note = f"The histogram below shows the distribution of property prices based on the selected attributes:\n" \
+note = f"The histogram below shows the distribution of properties' prices based on the selected attributes:\n" \
        f"- City: {selected_localitate}\n" \
        f"- District: {selected_district}\n" \
        f"- Construction Year: {selected_construction_year}\n" \
