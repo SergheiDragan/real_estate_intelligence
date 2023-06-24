@@ -228,6 +228,8 @@ if st.button('Predict House Price'):
     ax.set_xlabel('Property Price (EUR/m2)', fontsize=fontsize)
     ax.set_ylabel('# of Properties',fontsize=fontsize)
     ax.set_title('Histogram of Actual Property Prices', fontsize=fontsize)
+    ax.tick_params(axis='x', labelsize=9)
+    ax.tick_params(axis='y', labelsize=9)
 
     # Note for the user to understand what the histogram shows 
     st.text(note)
