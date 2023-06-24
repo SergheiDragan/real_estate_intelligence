@@ -235,11 +235,11 @@ if st.button('Predict House Price'):
     price_per_m2 = np.squeeze(prediction, -1)
     formatted_price_per_m2 = "{:,.0f}".format(price_per_m2)
     
-    st.write(f"The price per m2 of your property is: <span style='font-size: 20px'>{formatted_price_per_m2} €</span>", unsafe_allow_html=True)
+    st.write(f"The price per m2 of your property is: <span style='font-weight: bold; font-size: 20px'>{formatted_price_per_m2} €</span>", unsafe_allow_html=True)
     full_price = select_surface * prediction.item()
     formatted_full_price = "{:,.0f}".format(full_price)
     
-    st.write(f"The full price of your property is: <span style='font-size: 20px'>{formatted_full_price} €</span>", unsafe_allow_html=True)
+    st.write(f"The full price of your property is: <span style='font-weight: bold; font-size: 20px'>{formatted_full_price} €</span>", unsafe_allow_html=True)
 
     # Check if there are properties that match the selected criteria
     if filtered_df.empty:
