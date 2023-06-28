@@ -156,26 +156,22 @@ if project_phase == 'Yes':
 else:
     project_phase = False
 
-# Check district heating
-district_heating = st.selectbox('Does it have a Centralized Heating System?', ('Yes', 'No'))
-if district_heating == 'Yes':
+# Initialize heating systems to False
+district_heating = False
+building_heating = False
+individual_heating = False
+
+# Heating system selection
+heating_options = ('Centralized Heating', 'Building Heating', 'Individual Heating')
+selected_heating = st.selectbox('What type of heating system does the property have?', heating_options)
+
+# Update the selected heating system to True
+if selected_heating == 'Centralized Heating':
     district_heating = True
-else:
-    district_heating = False
-
-# Check building heating
-building_heating = st.selectbox('Does it have a Building Heating System?', ('Yes', 'No'))
-if building_heating == 'Yes':
+elif selected_heating == 'Building Heating':
     building_heating = True
-else:
-    building_heating = False
-
-# Check invidual heating
-individual_heating = st.selectbox('Does it have an Individual Heating System?', ('Yes', 'No'))
-if individual_heating == 'Yes':
+elif selected_heating == 'Individual Heating':
     individual_heating = True
-else:
-    individual_heating = False
 
 # Check Underfloor heating
 underfloor_heating = st.selectbox('Underfloor Heating?', ('Yes', 'No'))
