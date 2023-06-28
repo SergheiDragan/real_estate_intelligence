@@ -238,8 +238,10 @@ if st.button('Predict House Price'):
     st.write(f"The full price of your property is: <span style='font-weight: bold; font-size: 20px'>{formatted_full_price} €</span>", unsafe_allow_html=True)
 
     # Check if there are properties that match the selected criteria
-    if filtered_df.empty:
-        st.write("We wanted to show you a histogram with properties that match your selected criteria, but unfortunately there aren't any.")  
+    num_properties = len(filtered_df)
+    
+    if num_properties < 5:
+        st.write(f"Based on the selected criteria, there are less than 5 properties available. A histogram is generated only if the number of properties that satisfy the selected criteria meet this threshold.")
     else:    
         # Create the histogram using matplotlib
         fig, ax = plt.subplots(1, 1)
