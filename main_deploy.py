@@ -17,9 +17,7 @@ import seaborn as sns
 st.markdown("<h2 style='text-align: center;'>Estimează prețul proprietății tale în mai puțin de 1 minut!</h2>", unsafe_allow_html=True)
 
 description = '''
-Acesta este un instrument de estimare a prețului pentru proprietățile din România. 
-La bază, am folosit un algoritm de învățare automată antrenat pe un set de date ce conține aproximativ 70.000 de proprietăți din 9 cele mai mari orașe și 
-care ia in considerare peste 20 de caracteristici pentru fiecare imobil.
+Acesta este un instrument de estimare a prețului pentru proprietățile din România bazat pe un model de învățare automată antrenat pe un set de date ce conține aproximativ 70.000 de proprietăți din 9 cele mai mari orașe.
 '''
 st.markdown(description)
 
@@ -58,10 +56,6 @@ le_zona = le_dict['zona']
 xgb_model = XGBRegressor()
 xgb_model = joblib.load("best_model.joblib.gz")
 
-# Display 100 rows of the dataset if box is checked
-# if st.checkbox('Show Training Dataframe'):
-#     st.write(real_estate_df.head(100))
-
 # Define the user interface
 st.markdown('Select the information about your property:')
 
@@ -92,7 +86,7 @@ with left_column:
         np.unique(real_estate_df['partitioning']))
 
 # Select comfort level slider
-select_comfort = st.slider('Comfor Level:', 0, max(real_estate_df["comfort"]), 1)
+select_comfort = st.slider('Comfort Level (0 -> highest comfort to 3 -> lowest comfort):', 0, max(real_estate_df["comfort"]), 1)
 
 # Select floor level
 select_floor_level = st.slider('Floor Level:', -1, max(real_estate_df["floor_level"]), 1)
@@ -108,7 +102,7 @@ else:
     attic = False
 
 # Select furnishing level
-select_furnishing = st.slider('Furnishing Level:', 0, max(real_estate_df["furnishing"]), 1)
+select_furnishing = st.slider('Furnishing Level (0 -> unfurnished to 3 -> luxury furnishing):', 0, max(real_estate_df["furnishing"]), 1)
 
 # Select nr of bathrooms
 select_bathrooms = st.slider('Number of Bathrooms:', 0, 10, 1)
