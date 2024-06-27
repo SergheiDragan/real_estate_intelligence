@@ -22,7 +22,7 @@ Acesta este un instrument de estimare a prețului pentru proprietățile din Rom
 st.markdown(description)
 
 # Image URL
-image_url = 'https://github.com/SergheiDragan/real_estate_intelligence/blob/main/Modern_house_in_the_forest.png'
+image_url = 'https://github.com/SergheiDragan/real_estate_intelligence/blob/74cc5ab28c066091376162f62fc5121d9895ce32/Modern_house_in_the_forest.png'
 
 # Fetch image from URL
 response = requests.get(image_url)
