@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import seaborn as sns
 
-st.markdown("<h2 style='text-align: center;'>Estimează prețul proprietății tale în mai puțin de 1 minut!</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center;'>Descoperă valoarea reală a casei tale!</h2>", unsafe_allow_html=True)
 
 description = '''
 Acesta este un instrument de estimare a prețului pentru proprietățile din România bazat pe un model de învățare automată antrenat pe un set de date ce conține aproximativ 70.000 de proprietăți din 9 cele mai mari orașe.
@@ -22,7 +22,7 @@ Acesta este un instrument de estimare a prețului pentru proprietățile din Rom
 st.markdown(description)
 
 # Image URL
-image_url = 'https://raw.githubusercontent.com/dragan-serghei/real_estate_intelligence/main/house_vibrant_forest.jpeg'
+image_url = 'https://github.com/SergheiDragan/real_estate_intelligence/blob/main/Modern_house_in_the_forest.png'
 
 # Fetch image from URL
 response = requests.get(image_url)
